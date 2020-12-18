@@ -1,25 +1,101 @@
-import logo from './logo.svg';
-import './App.css';
 
+import React,{useState,useEffect} from 'react';
+import './App.css';
+import Header from './Components/Header/Header.component';
+import Banner from './Components/Banner/Banner.component';
+import {BrowserRouter as Router,Switch,Route} from 'react-router-dom';
+import MediaCard from './Components/MediaCard/MediaCard.component';
+import Filter from './Components/Filter/Filter.component';
+import {useStateValue} from './StateProvider';
+import CartPg from './Components/CartPg/CartPg.component';
+import Summary from './Components/Summary/Summary.compoent';
+import Pay from './Components/Pay/Pay.component';
 function App() {
+  
+ 
+  const [products,setProduct] = useState();
+  const [category, setCategory]= useState();
+  const [{Search,Category}]=useStateValue();
+
+  useEffect(()=>{
+    if(Category.length > 0){
+      fetch(`https://fakestoreapi.com/products/category/${Category}`)
+            .then(res=>res.json())
+            .then(json=>setCategory(json));
+    }
+    else{
+      fetch('https://fakestoreapi.com/products')
+            .then(res=>res.json())
+            .then(json=>setProduct(json));
+
+    }       
+  },[Category]);
+
+ 
+ 
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+       <Router>
+        <Switch>
+          
+          <Route path="/Cart_Pg">
+           <Header/>
+           <CartPg/>
+          </Route>
+
+          <Route path="/Summary">
+           <Header/>
+           <Summary/>
+          
+          </Route>
+
+
+        
+          <Route path="/Pay">
+              <Pay/>
+          </Route>
+
+          <Route  path="/">
+            <Header/>
+            <Banner/>
+            <div className="filterMain">
+            <Filter/>
+            <div className='productbg'>
+            {
+              Category.length > 0 ? 
+              category?.map((cat)=>(
+                <MediaCard key={cat.id} data={cat}/>
+              ))
+              :
+              products !== undefined ?
+
+               Search === null || Search === '' ?
+                products?.map((product)=>(
+                <MediaCard key={product.id} data={product}/>
+              ))  
+              :
+              products.filter((product)=>(
+                  product?.title.toLowerCase().indexOf(Search.toLowerCase()) !== -1   
+              )).map((product)=>(
+                <MediaCard key={product.id} data={product}/>
+              ))
+          :''
+          
+            } 
+            
+             
+        
+
+          
+            </div>
+            </div>
+           
+            
+            
+          </Route>
+        </Switch>
+      </Router >
     </div>
   );
 }
-
 export default App;
