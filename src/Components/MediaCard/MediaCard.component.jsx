@@ -16,18 +16,17 @@ const useStyles = makeStyles({
     backgroundColor:'white',
     margin:'0.5em',
     
+    
    
   },
   Button:{
     backgroundColor:'black ',
     padding:'0.6em',
     color:'grey',
-    display:'flex',
-    justifyContent:'center'
-    
+   
   },
   media: {
-    height: 120,
+    height: 250,
   },
 });
 
@@ -64,7 +63,7 @@ export default function MediaCard({data}) {
           <Typography gutterBottom variant="h5" component="h2">
             {data.title.substring(0,20)}..
           </Typography>
-          <Typography variant="body2" color="textSecondary" component="p">
+          <Typography variant="body2" color="textPrimary" component="p">
             <b>₹{data.price}</b>
           </Typography>
         </CardContent>
