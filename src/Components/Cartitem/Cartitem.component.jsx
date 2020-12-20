@@ -11,7 +11,11 @@ const removeFromCart=()=>{
         type:"REMOVE_FROM_CART",
         item:
         {
-        id:data.id,
+            id:data.id,
+            name:data.name,
+            imageUrl:data.imageUrl,
+            price:data.price,
+            quantity:1,
         }
     });
 }
@@ -42,6 +46,9 @@ const removeFromCart=()=>{
                 <span className='name'>{data.name}</span>
 
                     <span className='quantity'>
+                    <div className='arrow' onClick={removeFromCart} >
+                                &#10094;
+                    </div>
                         <span>{data.quantity}</span>
                             <div className='arrow' onClick={addToCart} >
                                 &#10095;

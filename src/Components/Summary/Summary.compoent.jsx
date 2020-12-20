@@ -1,5 +1,4 @@
 import React from 'react';
-import Cartitem from '../Cartitem/Cartitem.component';
 import {Link} from 'react-router-dom';
 
 import {getTotal} from '../../Reducer';
@@ -26,7 +25,19 @@ function Summary() {
             <div className='product'>
             {
                  cart.map((pg)=>(
-                     <Cartitem key={pg.id} data={pg}></Cartitem>
+                     
+                    <div className='checkout-item'>
+                        <div className='image-container'>
+                            <img alt='item' src={pg.imageUrl}></img>
+                        </div>
+                        
+                        <span className='name'>{pg.name}</span>
+                            <span className='quantity'>
+                                <span>{pg.quantity}</span>
+                            </span>
+                        <span className='price'>₹{pg.price * pg.quantity}</span>     
+                    </div>
+
                  ))
             }
 

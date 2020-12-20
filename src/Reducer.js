@@ -40,9 +40,21 @@ function reducer(state,action){
         case "REMOVE_FROM_CART":
             let newCart = state.cart;
             const index1 = state.cart.findIndex((cart)=> cart.id === action.item.id);
-
+            
             if(index1 >= 0){
-                newCart.splice(index1,1);
+                if(state.cart[index1].quantity < 2){
+                    newCart.splice(index1,1);
+                }
+                else{
+                    newCart.splice(index1,1,{
+                        id:action.item.id,
+                        imageUrl:action.item.imageUrl,
+                        name:action.item.name,
+                        price:action.item.price,
+                        quantity:state.cart[index1].quantity-action.item.quantity
+                    })
+                }
+                
             }else{
                 console.warn(`cant remove:${action.id}`);
             }
