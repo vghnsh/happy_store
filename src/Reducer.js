@@ -2,6 +2,8 @@ export const initialState = {
     cart:[],
     Search:null,
     Category:[],
+    isSign:false,
+    user:null,
 
 };
 export const getTotal =(cart) =>
@@ -14,6 +16,13 @@ function reducer(state,action){
     
     console.log(action);
     switch(action.type){
+
+        case "SET_CURRENT_USER":
+                return{
+                    ...state,
+                    user:action.user,
+                    isSign:action.isSign
+                };
 
         case "ADD_TO_CART":
             let newCart1 = state.cart;
