@@ -4,13 +4,13 @@ import firebase from 'firebase';
 
   var firebaseApp =firebase.initializeApp(
   {
-    apiKey: "AIzaSyCpCIue8VUlZttuLS8oxw3RfYWNcLwbgWA",
-    authDomain: "happystore-b6b8c.firebaseapp.com",
-    databaseURL: "https://happystore-b6b8c-default-rtdb.firebaseio.com",
-    projectId: "happystore-b6b8c",
-    storageBucket: "happystore-b6b8c.appspot.com",
-    messagingSenderId: "446265469540",
-    appId: "1:446265469540:web:dbc693d160317532168d71"
+    apiKey: "AIzaSyB28w3A6sgusTqulfml8Qj-HP6ngUjFjw8",
+    authDomain: "happystore-3e775.firebaseapp.com",
+    projectId: "happystore-3e775",
+    storageBucket: "happystore-3e775.appspot.com",
+    messagingSenderId: "885195820421",
+    appId: "1:885195820421:web:034c03adee76790fa148ec",
+    measurementId: "G-FC3JP0VZ8F"
     }
 
 ) ;

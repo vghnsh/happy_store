@@ -12,7 +12,7 @@ function Historyitem({data,add}) {
                 <span><b>Order Placed On: </b>{data.time}</span>
             </div>
             <div>
-                <span><b>Address: </b>{add?.address}</span>
+                <span><b>Address: </b>{add}</span>
             </div>
                 {
                 data.cart?.map((pgd)=>((
