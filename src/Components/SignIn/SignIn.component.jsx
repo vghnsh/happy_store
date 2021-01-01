@@ -5,42 +5,39 @@ import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import firebase from 'firebase';
 import {auth} from '../../firebase';
+import {Spinner} from '../../Components/Spinner/Spinner.component';
 
 function Signin() {
     const [mail, setMail]= useState('');
     const [password, setPassword]= useState('');
     const history = useHistory();
-
-   
+    const [loggedInState,setLoggedInState]=useState();
     
-    
-    const signInWithGoogle = () => {
+    const signInWithGoogle = () => {     
         const provider =new firebase.auth.GoogleAuthProvider();
         provider.setCustomParameters({propmt:'select_account'});
         auth.signInWithPopup(provider)
           .then(() => {
             history.push("/");
-          });
-          
-      };
+          });  
+    };
 
-      const signIn=(event)=>{
-        event.preventDefault();
-        
-        auth.signInWithEmailAndPassword(mail,password)
-        .then(auth=>{history.push("/")})
-        .catch((error)=>alert(error.message));
-        setMail('');
-        setPassword('');
-        
-        
-      };
+    const signIn=(event)=>{
+    event.preventDefault(); 
+    auth.signInWithEmailAndPassword(mail,password)
+    .then(setLoggedInState("login"))
+    .then(auth=>{history.push("/")})
+    .catch((error)=>alert(error.message));
+    setMail('');
+    setPassword('');
+    };
 
-      
-   
     return (
       <div className="loghead">
-        <div className='signin'>
+        {
+          loggedInState === "login" ?  <Spinner/>
+          :
+          <div className='signin'>
             <div>
             <h1 className='title'>SignIN</h1>
             </div>
@@ -85,12 +82,12 @@ function Signin() {
                Go to SignUP 
             </Link>
            </div>
-         
-            
-            
-            </div>
+          
+          </div>
             
         </div>
+        }
+        
       </div>
         
     )

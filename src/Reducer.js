@@ -4,14 +4,16 @@ export const initialState = {
     Category:[],
     isSign:false,
     user:null,
-
+    product:[],
+    filter:[]
 };
 export const getTotal =(cart) =>
     cart?.reduce((price,item)=>item.price * item.quantity + price, 0);
 
 export const getQuant = (cart) =>
-    cart?.reduce((quantity,item)=>item.quantity+quantity,0);
+        cart?.reduce((quantity,item)=>item.quantity+quantity,0);
 
+   
 function reducer(state,action){
     
     console.log(action);
@@ -70,7 +72,12 @@ function reducer(state,action){
             return {
                 ...state
             };
-      
+            
+        case "CLEAR_CART":
+            return{
+                ...state,
+                cart:action.cart
+            }
      
         case "SET_SEARCH":
             return{
@@ -79,11 +86,26 @@ function reducer(state,action){
             }
         
         case "SET_CATEGORY":
+            let newProduct = state.product;
+            newProduct.filter((pr) =>(
+                pr.category === action.Category
+            ))
             return{
                 ...state,
-                Category:action.Category
+               
             }
         
+            case "PRODUCTS":
+                return{
+                    ...state,
+                    product:action.product
+                }
+            
+            case "FILTER":
+                return{
+                    ...state,
+                    filter:action.filter
+                }
           
         default:
             return state;

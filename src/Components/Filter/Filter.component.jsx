@@ -4,56 +4,63 @@ import './Filter.style.scss';
 
 import {useStateValue} from '../../StateProvider';
 function Filter() {
-
     const [,dispatch] = useStateValue();
+    const [{product}]=useStateValue();
 
     const setMen=(e)=>{
         dispatch({
-            type:"SET_CATEGORY",
-            Category:"men clothing" 
-        })
+            type:"FILTER",
+            filter:product?.filter(pd =>(
+                (pd.category === "men clothing")
+            )) 
+        }) 
     }
+
     const setWomen=(e)=>{
         dispatch({
-            type:"SET_CATEGORY",
-            Category:"women clothing" 
-        })
+            type:"FILTER",
+            filter:product?.filter(pd =>(
+                (pd.category === "women clothing")
+            )) 
+        }) 
     }
+
     const setJew=(e)=>{
         dispatch({
-            type:"SET_CATEGORY",
-            Category:"jewelery" 
-        })
+            type:"FILTER",
+            filter:product?.filter(pd =>(
+                (pd.category === "jewelery")
+            )) 
+        })       
     }
+
     const setElectro=(e)=>{
         dispatch({
-            type:"SET_CATEGORY",
-            Category:"electronics" 
-        })
+            type:"FILTER",
+            filter:product?.filter(pd =>(
+                (pd.category === "electronics")
+            )) 
+        }) 
     }
+
     const clear=(e)=>{
         dispatch({
-            type:"SET_CATEGORY",
-            Category:"" 
-        })
+            type:"FILTER",
+            filter:''
+        }) 
     }
     
-    
-   
     return (
-        <div>
+        <div className='filterw'>
             <b><h2>Filter</h2></b>
             <div className='Filter'>
-            <Button onClick={clear} className='btn' variant="contained" color="primary" >Clear</Button>
-            <Button onClick={setWomen} className='btn' variant="contained" color="primary">Women Clothing</Button>
-            <Button onClick={setMen} className='btn' variant="contained" color="primary">Men Clothing</Button>
-            <Button onClick={setJew} className='btn' variant="contained" color="primary">Jewelery</Button>
-            <Button onClick={setElectro} className='btn' variant="contained" color="primary">electronics</Button>
-           
-        </div>
-        </div>
-
-       
+                <Button onClick={clear} className='btn' variant="contained" color="primary" >Clear</Button>
+                <Button onClick={setWomen} className='btn' variant="contained" color="primary">Women Clothing</Button>
+                <Button onClick={setMen} className='btn' variant="contained" color="primary">Men Clothing</Button>
+                <Button onClick={setJew} className='btn' variant="contained" color="primary">Jewelery</Button>
+                <Button onClick={setElectro} className='btn' variant="contained" color="primary">electronics</Button>          
+            </div>
+        </div>      
     )
 }
 

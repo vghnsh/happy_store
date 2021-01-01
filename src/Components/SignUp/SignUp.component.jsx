@@ -5,6 +5,7 @@ import {TextField ,Button} from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 import {auth} from '../../firebase';
 
+import {Spinner} from '../../Components/Spinner/Spinner.component';
 import firebase from 'firebase';
 import './Signup.style.scss';
 
@@ -12,6 +13,8 @@ function Signup() {
     const [mail, setMail]= useState('');
     const [password, setPassword]= useState('');
     const [uname, setUname]= useState('');
+    
+    const [loggedInState,setLoggedInState]=useState();
     const history = useHistory();
 
     const signInWithGoogle = () => {
@@ -24,38 +27,27 @@ function Signup() {
           
       };
 
-
     const signUp=(event)=>{
-        event.preventDefault();
-        
-           
-          auth.createUserWithEmailAndPassword(mail, password)
-          .then((authUser)=>{
-          return authUser.user.updateProfile({
+        event.preventDefault(); 
+        setLoggedInState("login"); 
+        auth.createUserWithEmailAndPassword(mail, password)
+        .then((authUser)=>{
+        return authUser.user.updateProfile({
             displayName : uname
-          })
-        })
-        
-       
-        
-        .then(auth=>{history.push("/")})
-    
-        .catch((error)=> alert(error.message));
-        
-        
-        
-      
+        })}).then(auth=>{history.push("/")})
+        .catch((error)=> alert(error.message));  
     };
 
     return (
       <div className='loghead'>
-         <div className='signUp'>
+        {
+          loggedInState === "login" ?  <Spinner/>
+          :
+          <div className='signUp'>
             <div>
             <h1 className='title'>SignUP</h1>
             </div>
            
-    
-            
             <div className='signDiv'>
             <Button onClick={signInWithGoogle} className='GoogleSign'>
                 Sign In with Google (Recommanded)
@@ -102,9 +94,10 @@ function Signup() {
                 SignUP 
             </Button>
             
-            
             </div>
             </div>
+        }
+         
 
       </div>
        

@@ -1,5 +1,5 @@
 
-import React,{useState,useEffect} from 'react';
+import React,{useEffect} from 'react';
 import './App.css';
 import Header from './Components/Header/Header.component';
 import Banner from './Components/Banner/Banner.component';
@@ -9,40 +9,41 @@ import Filter from './Components/Filter/Filter.component';
 import {useStateValue} from './StateProvider';
 import CartPg from './Components/CartPg/CartPg.component';
 import Summary from './Components/Summary/Summary.compoent';
-import Pay from './Components/Pay/Pay.component';
+import History from './Components/History/History.component';
 import SignIn from './Components/SignIn/SignIn.component';
 import SignUp from './Components/SignUp/SignUp.component';
 import {auth} from './firebase';
+
 function App() {
   
   const [,dispatch] = useStateValue();
-  const [products,setProduct] = useState();
-  const [category, setCategory]= useState();
-  const [{Search,Category}]=useStateValue();
+  const [{Search,filter,product}]=useStateValue();
 
   useEffect(()=>{
+    fetch('https://fakestoreapi.com/products')
+              .then(res=>res.json())
+              .then(json=> dispatch({
+                type:"PRODUCTS",
+                product:json
+              })
+              );
+  },[dispatch]);
+  
+  useEffect(()=>{
     const unsubsribe= auth.onAuthStateChanged((authUser)=>{
-    
-      if(authUser){
-        
-        
-        dispatch({
-            
+      if(authUser){ 
+        dispatch({   
           type:"SET_CURRENT_USER",
           user:authUser,
           isSign:true
       });
       }
       else{
-       
         dispatch({
-        
           type:"SET_CURRENT_USER",
           user:null,
-          isSign:false
-          
-      });
-        
+          isSign:false         
+      });   
       }
       return()=>{
         unsubsribe();
@@ -50,7 +51,7 @@ function App() {
     });
   },[dispatch]);
 
-  useEffect(()=>{
+  /*useEffect(()=>{
     if(Category.length > 0){
       fetch(`https://fakestoreapi.com/products/category/${Category}`)
             .then(res=>res.json())
@@ -64,8 +65,9 @@ function App() {
     }       
   },[Category]);
 
- 
- 
+*/
+
+
   return (
     <div className="App">
        <Router>
@@ -89,11 +91,9 @@ function App() {
             <SignUp/>    
           </Route>
 
-
-
-        
-          <Route path="/Pay">
-              <Pay/>
+          <Route path="/History">
+              <Header/>
+              <History/>
           </Route>
 
           <Route  path="/">
@@ -102,32 +102,37 @@ function App() {
             <div className="filterMain">
             <Filter/>
             <div className='productbg'>
-            {
-              Category.length > 0 ? 
-              category?.map((cat)=>(
-                <MediaCard key={cat.id} data={cat}/>
-              ))
-              :
-              products !== undefined ?
-
-               Search === null || Search === '' ?
-                products?.map((product)=>(
-                <MediaCard key={product.id} data={product}/>
-              ))  
-              :
-              products.filter((product)=>(
+            { 
+              filter.length > 0 
+              ? 
+                Search === null || Search === '' 
+                ? 
+                  filter?.map((cat)=>(
+                  <MediaCard key={cat.id} data={cat}/>
+                  ))
+                :
+                  filter?.filter((product)=>(
                   product?.title.toLowerCase().indexOf(Search.toLowerCase()) !== -1   
-              )).map((product)=>(
-                <MediaCard key={product.id} data={product}/>
-              ))
-          :''
-          
-            } 
-            
-             
-        
-
-          
+                  )).map((product)=>(
+                  <MediaCard key={product.id} data={product}/>
+                  ))
+              :
+                product !== undefined 
+                ? 
+                  Search === null || Search === ''  
+                  ?
+                    product?.map((product)=>(
+                    <MediaCard key={product.id} data={product}/>
+                  ))  
+                  :
+                    product?.filter((product)=>(
+                        product?.title.toLowerCase().indexOf(Search.toLowerCase()) !== -1   
+                    )).map((product)=>(
+                      <MediaCard key={product.id} data={product}/>
+                    ))
+                :
+                ''
+          }  
             </div>
             </div>
            

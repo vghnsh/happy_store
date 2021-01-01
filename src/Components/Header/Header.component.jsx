@@ -5,12 +5,13 @@ import {ReactComponent as ShoppingIcon} from './shopping-bag.svg';
 import {useStateValue} from '../../StateProvider';
 import {TextField } from '@material-ui/core';
 import logo from '../Header/logo9.png';
-import SearchIcon from '@material-ui/icons/Search';
-
+import { useHistory } from "react-router-dom";
 import {getQuant} from '../../Reducer';
 import {auth} from '../../firebase';
+
 function Header() {
     
+    const history = useHistory();
     const [,dispatch] = useStateValue();
     const [{cart,user,isSign}]=useStateValue();
     
@@ -25,8 +26,9 @@ function Header() {
         event.preventDefault();
         
         auth.signOut();
-        
-      };
+        history.push("/");
+     
+    };
 
     return (
         <nav className="header">
@@ -47,39 +49,28 @@ function Header() {
                     color="primary"
                     onChange={handleChange}
                     />
-
-                <SearchIcon className='SearchIcon' >
-                    
-                </SearchIcon>
-
             </div>
-            
-            {
-                user?.displayName? 
-                <Link className="link" to="/">{user.displayName}</Link>
-                :<Link className="link" to="/" >Account</Link>
-            }
-            
-           
+            {user?.displayName?    
+                <div className='personal'>
+                    <Link className="link" to="/">{user.displayName}</Link>
+                    <Link className="link" to="/History">Your orders</Link>
+                </div>
+            :<Link className="link" to="/" >Account</Link>
+            }  
             {
                 isSign ? 
                 <Link
                 className="link" 
                 onClick={signOut} 
-                to="/"
-                
+                to="/" 
                 >Logout 
                 </Link>
                 :
-                
                 <Link className="link" to="/SignIn">
                 SignIN
                 </Link>
                
             }
-            
-           
-
             <Link to="/Cart_Pg">
                 <div className="cart-icon">
                     <ShoppingIcon

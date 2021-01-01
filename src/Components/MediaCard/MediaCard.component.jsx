@@ -15,10 +15,11 @@ const useStyles = makeStyles({
     maxWidth: 300,
     backgroundColor:'white',
     margin:'0.5em',
-    
-    
-   
+    '&:hover': {
+      backgroundColor: '#99f',
+    },
   },
+  
   Button:{
     backgroundColor:'black ',
     padding:'0.6em',
@@ -33,6 +34,7 @@ const useStyles = makeStyles({
 export default function MediaCard({data}) {
 
   const [,dispatch] = useStateValue();
+  
 
   const addToCart=()=>{
        
@@ -43,28 +45,27 @@ export default function MediaCard({data}) {
         id:data.id,
         name:data.title,
         imageUrl:data.image,
-        price:data.price,
+        price:data.price*50,
         quantity:1,
         }
     });
 }
-
+  
   const classes = useStyles();
 
   return (
-    <Card className={classes.root}>
+    <Card className={classes.root} >
       <CardActionArea>
         <CardMedia
           className={classes.media}
           image={data.image}
-          title="Contemplative Reptile"
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
             {data.title.substring(0,20)}..
           </Typography>
           <Typography variant="body2" color="textPrimary" component="p">
-            <b>₹{data.price}</b>
+            <b>₹{data.price*50}</b>
           </Typography>
         </CardContent>
       </CardActionArea>

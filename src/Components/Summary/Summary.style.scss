@@ -1,15 +1,16 @@
 .summary {
   display: flex;
-  justify-content: center;
+
+  //justify-content: center;
+  margin: 0 10em;
 }
 
 .checkout-item {
   justify-content: center;
-  width: 70%;
+  //width: 70%;
   display: flex;
-
   border-bottom: 1px solid darkgrey;
-  padding: 15px 0;
+  margin: 0 4.5em;
   font-size: 20px;
   align-items: center;
 
@@ -40,9 +41,26 @@
       margin: 0 10px;
     }
   }
+}
+.product {
+  .tit {
+    display: flex;
+    justify-content: center;
+  }
+}
+.link_hist {
+  text-decoration: none;
+  color: black;
+}
 
-  .remove-button {
-    padding-left: 12px;
-    cursor: pointer;
+@media screen and (max-width: 800px) {
+  .summary {
+    display: flex;
+    flex-direction: column-reverse;
+    margin: 0;
+  }
+  .checkout-item {
+    padding: 0.5em 2.5em;
+    margin: 0;
   }
 }
