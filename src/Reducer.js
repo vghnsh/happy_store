@@ -5,7 +5,8 @@ export const initialState = {
     isSign:false,
     user:null,
     product:[],
-    filter:[]
+    filter:[],
+    isLoading:false,
 };
 export const getTotal =(cart) =>
     cart?.reduce((price,item)=>item.price * item.quantity + price, 0);
@@ -18,6 +19,11 @@ function reducer(state,action){
     
     console.log(action);
     switch(action.type){
+        case "SET_LOADING":
+            return{
+                ...state,
+                isLoading:action.isLoading
+            }
 
         case "SET_CURRENT_USER":
                 return{

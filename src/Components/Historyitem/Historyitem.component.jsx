@@ -1,19 +1,22 @@
 import React from 'react';
 
 import Summaryitem from '../../Components/Summaryitem/Summaryitem.component';
-
+import './Historyitem.style.scss';
 function Historyitem({data,add}) {
     return (
         <div className='hist'> 
-            <div>
-                <span><b>Order Amount: </b>₹{data.amount}</span>
+        <div className="HistData">
+        <div className="HistDataitem">
+                <b>Order Amount: </b>₹{data.amount}
             </div>
-            <div>
-                <span><b>Order Placed On: </b>{data.time}</span>
+            <div className="HistDataitem">
+                <b>Order Placed On: </b>{data.time}
             </div>
-            <div>
-                <span><b>Address: </b>{add}</span>
+            <div className="HistDataitem">
+                <b>Address: </b>{add}
             </div>
+        </div>
+           
                 {
                 data.cart?.map((pgd)=>((
                     <Summaryitem key={pgd.id} data={pgd} />
@@ -22,5 +25,4 @@ function Historyitem({data,add}) {
         </div>
     )
 }
-
 export default Historyitem;

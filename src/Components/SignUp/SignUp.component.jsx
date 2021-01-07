@@ -5,43 +5,60 @@ import {TextField ,Button} from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 import {auth} from '../../firebase';
 
-import {Spinner} from '../../Components/Spinner/Spinner.component';
+import {Spin,Space} from 'antd';
+import {useStateValue} from '../../StateProvider';
 import firebase from 'firebase';
 import './Signup.style.scss';
 
+import styled from "styled-components";
 function Signup() {
     const [mail, setMail]= useState('');
     const [password, setPassword]= useState('');
     const [uname, setUname]= useState('');
     
-    const [loggedInState,setLoggedInState]=useState();
     const history = useHistory();
 
+    const [{isLoading}] = useStateValue();
+    const [,dispatch]= useStateValue();
     const signInWithGoogle = () => {
         const provider =new firebase.auth.GoogleAuthProvider();
         provider.setCustomParameters({propmt:'select_account'});
         auth.signInWithPopup(provider)
           .then(() => {
             history.push("/");
-          });
-          
+          });   
       };
 
-    const signUp=(event)=>{
+      const signUp=(event)=>{
         event.preventDefault(); 
-        setLoggedInState("login"); 
+        dispatch({
+              type:'SET_LOADING',
+              isLoading:true
+            })
         auth.createUserWithEmailAndPassword(mail, password)
         .then((authUser)=>{
         return authUser.user.updateProfile({
             displayName : uname
-        })}).then(auth=>{history.push("/")})
-        .catch((error)=> alert(error.message));  
+        })}).then(()=>dispatch({
+          type:"SET_LOADING",
+          isLoading:false
+        }))
+        .then(()=>{history.push("/")})
+        .catch((error)=>alert(error.message)).then(()=>dispatch({
+          type:"SET_LOADING",
+          isLoading:false
+        }));  
     };
 
     return (
       <div className='loghead'>
         {
-          loggedInState === "login" ?  <Spinner/>
+          isLoading ?
+          <Load>
+            <Space>
+              <Spin size="large" />
+            </Space>
+          </Load>
           :
           <div className='signUp'>
             <div>
@@ -86,24 +103,20 @@ function Signup() {
                     value={password}
                     onChange={(e)=>setPassword(e.target.value)}
                 />
-            
-           
             </form>
-         
             <Button onClick={signUp}  className='signUPBTN'>
                 SignUP 
             </Button>
-            
             </div>
-            </div>
+          </div>
         }
-         
-
-      </div>
-       
-            
-        
+    </div>    
     )
 }
 
 export default Signup;
+const Load = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 39em;`;

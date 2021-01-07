@@ -5,37 +5,62 @@ import {Link} from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import firebase from 'firebase';
 import {auth} from '../../firebase';
-import {Spinner} from '../../Components/Spinner/Spinner.component';
+import {useStateValue} from '../../StateProvider';
+import {Spin,Space} from 'antd';
+import styled from "styled-components";
 
 function Signin() {
     const [mail, setMail]= useState('');
     const [password, setPassword]= useState('');
     const history = useHistory();
-    const [loggedInState,setLoggedInState]=useState();
-    
+    const [,dispatch]= useStateValue();
+    const [{isLoading}] =useStateValue();
+
     const signInWithGoogle = () => {     
-        const provider =new firebase.auth.GoogleAuthProvider();
-        provider.setCustomParameters({propmt:'select_account'});
-        auth.signInWithPopup(provider)
-          .then(() => {
-            history.push("/");
-          });  
+      const provider =new firebase.auth.GoogleAuthProvider();
+      provider.setCustomParameters({propmt:'select_account'});
+      auth.signInWithPopup(provider)
+      .then(()=>dispatch({
+        type:"SET_LOADING",
+        isLoading:false
+      }))
+      .then(()=>{history.push("/")})
+      .catch((error)=>alert(error.message)).then(()=>dispatch({
+        type:"SET_LOADING",
+        isLoading:false
+      }));  
     };
 
-    const signIn=(event)=>{
+  const signIn=(event)=>{
     event.preventDefault(); 
-    auth.signInWithEmailAndPassword(mail,password)
-    .then(setLoggedInState("login"))
-    .then(auth=>{history.push("/")})
-    .catch((error)=>alert(error.message));
-    setMail('');
-    setPassword('');
-    };
+    dispatch({
+          type:'SET_LOADING',
+          isLoading:true
+        })
+  
+  auth.signInWithEmailAndPassword(mail,password)
+  .then(()=>dispatch({
+    type:"SET_LOADING",
+    isLoading:false
+  }))
+  .then(()=>{history.push("/")})
+  .catch((error)=>alert(error.message)).then(()=>dispatch({
+    type:"SET_LOADING",
+    isLoading:false
+  }));
+  setMail('');
+  setPassword('');
+  };
 
     return (
       <div className="loghead">
         {
-          loggedInState === "login" ?  <Spinner/>
+           isLoading ?
+           <Load>
+             <Space>
+               <Spin size="large" />
+             </Space>
+           </Load> 
           :
           <div className='signin'>
             <div>
@@ -70,8 +95,6 @@ function Signin() {
                     value={password}
                     onChange={(e)=>setPassword(e.target.value)}
                 />
-            
-           
             </form>
             <Button onClick={signIn}  className='signBTN'>
                 Sign In 
@@ -81,16 +104,17 @@ function Signin() {
            <Link className='link' to='/SignUP'>
                Go to SignUP 
             </Link>
-           </div>
-          
-          </div>
-            
+           </div>         
+          </div>     
         </div>
         }
-        
-      </div>
-        
+      </div>        
     )
 }
 
 export default Signin;
+const Load = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 39em;`;

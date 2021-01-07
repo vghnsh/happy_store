@@ -13,6 +13,7 @@ import History from './Components/History/History.component';
 import SignIn from './Components/SignIn/SignIn.component';
 import SignUp from './Components/SignUp/SignUp.component';
 import {auth} from './firebase';
+import 'antd/dist/antd.css';
 
 function App() {
   
