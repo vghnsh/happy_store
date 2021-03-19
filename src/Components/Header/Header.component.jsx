@@ -22,6 +22,7 @@ function Header() {
         })
     }
 
+    
     const signOut=(event)=>{
         event.preventDefault();
         
@@ -47,7 +48,7 @@ function Header() {
                     label="Product"
                     variant="outlined"
                     color="primary"
-                    onChange={handleChange}
+                    onKeyUp={handleChange}
                     />
             </div>
             {user?.displayName?    

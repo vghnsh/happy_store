@@ -54,7 +54,7 @@ function Filter() {
         <div className='filterw'>
             <b><h2>Filter</h2></b>
             <div className='Filter'>
-                <Button onClick={clear} className='btn' variant="contained" color="primary" >Clear</Button>
+                <Button  onClick={clear} className='btn' variant="contained" color="primary" >Clear</Button>
                 <Button onClick={setWomen} className='btn' variant="contained" color="primary">Women Clothing</Button>
                 <Button onClick={setMen} className='btn' variant="contained" color="primary">Men Clothing</Button>
                 <Button onClick={setJew} className='btn' variant="contained" color="primary">Jewelery</Button>

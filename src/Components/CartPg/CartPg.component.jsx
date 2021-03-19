@@ -29,21 +29,23 @@ function CartPg() {
                     <div className='cart_div'>
                         <div className='cart_item'>
                         {
-                            cart.map((pg)=>(
-                                <Cartitem key={pg.id} data={pg}></Cartitem>
+                            cart?.map((pg)=>(
+                                <Cartitem key={pg.item.id} data={pg}></Cartitem>
                             ))
                         }
                         </div>  
                             <div className='btn'>                             
                                 <Button onClick={summ}  size="large"  color="primary" variant="contained">Proceed To Pay 
                                 </Button>                          
-                                &nbsp;<b>₹{getTotal(cart)}</b>                
+                                &nbsp;<h2><b>₹{getTotal(cart)}</b></h2>                
                             </div>
                     </div>
                     :
+
                     <div className="link">Cart is Empty</div>
                 }
             </div>      
     )
 }
+
 export default CartPg;

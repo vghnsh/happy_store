@@ -33,23 +33,31 @@ function Signin() {
 
   const signIn=(event)=>{
     event.preventDefault(); 
-    dispatch({
-          type:'SET_LOADING',
-          isLoading:true
-        })
-  
-  auth.signInWithEmailAndPassword(mail,password)
-  .then(()=>dispatch({
-    type:"SET_LOADING",
-    isLoading:false
-  }))
-  .then(()=>{history.push("/")})
-  .catch((error)=>alert(error.message)).then(()=>dispatch({
-    type:"SET_LOADING",
-    isLoading:false
-  }));
-  setMail('');
-  setPassword('');
+    if(mail === 'admin@gmail.com' && password === '123123'){
+      history.push("/Admin");
+    }
+    else{
+      dispatch({
+        type:'SET_LOADING',
+        isLoading:true
+      })
+
+auth.signInWithEmailAndPassword(mail,password)
+.then(()=>dispatch({
+  type:"SET_LOADING",
+  isLoading:false
+}))
+.then(()=>{
+    history.push("/");  
+})
+.catch((error)=>alert(error.message)).then(()=>dispatch({
+  type:"SET_LOADING",
+  isLoading:false
+}));
+setMail('');
+setPassword('');
+    }
+   
   };
 
     return (

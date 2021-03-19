@@ -12,19 +12,20 @@ import {useStateValue} from '../../StateProvider';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 300,
+    maxWidth: 270,
     backgroundColor:'white',
     margin:'0.5em',
-    '&:hover': {
-      backgroundColor: '#99f',
-    },
+    padding:'0.5em',
+   
   },
   
   Button:{
     backgroundColor:'black ',
     padding:'0.6em',
-    color:'grey',
-   
+    color:'white',
+    '&:hover': {
+      backgroundColor: '#99f',
+    },
   },
   media: {
     height: 250,
@@ -36,8 +37,7 @@ export default function MediaCard({data}) {
   const [,dispatch] = useStateValue();
   
 
-  const addToCart=()=>{
-       
+  const addToCart=()=>{  
     dispatch({
         type:"ADD_TO_CART",
         item:
@@ -46,8 +46,8 @@ export default function MediaCard({data}) {
         name:data.title,
         imageUrl:data.image,
         price:data.price*50,
-        quantity:1,
         }
+        ,quantity:1
     });
 }
   

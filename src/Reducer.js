@@ -8,16 +8,17 @@ export const initialState = {
     filter:[],
     isLoading:false,
 };
+
 export const getTotal =(cart) =>
-    cart?.reduce((price,item)=>item.price * item.quantity + price, 0);
+    cart?.reduce((price,item)=>item.item.price * item.quantity + price, 0);
 
 export const getQuant = (cart) =>
         cart?.reduce((quantity,item)=>item.quantity+quantity,0);
 
    
 function reducer(state,action){
-    
     console.log(action);
+    console.log(state)
     switch(action.type){
         case "SET_LOADING":
             return{
@@ -34,20 +35,17 @@ function reducer(state,action){
 
         case "ADD_TO_CART":
             let newCart1 = state.cart;
-            const index = state.cart.findIndex((cart)=> cart.id === action.item.id);
+            const index = state.cart.findIndex((cart)=> cart.item.id === action.item.id);
             if(index >= 0 ){
                 newCart1.splice(index,1,{
-                    id:action.item.id,
-                    imageUrl:action.item.imageUrl,
-                    name:action.item.name,
-                    price:action.item.price,
-                    quantity:state.cart[index].quantity+action.item.quantity
+                    item:action.item,
+                    quantity:state.cart[index].quantity+action.quantity
                 })
             }
             else{
                 return {
                     ...state,
-                    cart:[...state.cart,action.item],
+                    cart:[...state.cart,{item:action.item,quantity:action.quantity}],
                 } 
             }
             return {
@@ -56,7 +54,7 @@ function reducer(state,action){
             
         case "REMOVE_FROM_CART":
             let newCart = state.cart;
-            const index1 = state.cart.findIndex((cart)=> cart.id === action.item.id);
+            const index1 = state.cart.findIndex((cart)=> cart.item.id === action.item.id);
             
             if(index1 >= 0){
                 if(state.cart[index1].quantity < 2){
@@ -64,11 +62,8 @@ function reducer(state,action){
                 }
                 else{
                     newCart.splice(index1,1,{
-                        id:action.item.id,
-                        imageUrl:action.item.imageUrl,
-                        name:action.item.name,
-                        price:action.item.price,
-                        quantity:state.cart[index1].quantity-action.item.quantity
+                        item:action.item,
+                        quantity:state.cart[index1].quantity-action.quantity
                     })
                 }
                 
@@ -80,10 +75,14 @@ function reducer(state,action){
             };
             
         case "CLEAR_CART":
-            return{
-                ...state,
-                cart:action.cart
+            let newCart3 = state.cart;
+            const index3 = state.cart.findIndex((cart)=> cart.item.id === action.id);
+            if(index3>=0){
+                newCart3.splice(index3,1);
             }
+            return{
+                ...state
+            };
      
         case "SET_SEARCH":
             return{
@@ -106,6 +105,11 @@ function reducer(state,action){
                     ...state,
                     product:action.product
                 }
+                case "EMPTY_CART":
+                    return{
+                        ...state,
+                        cart:action.cart
+                    }
             
             case "FILTER":
                 return{

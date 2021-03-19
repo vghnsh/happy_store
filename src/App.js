@@ -3,7 +3,7 @@ import React,{useEffect} from 'react';
 import './App.css';
 import Header from './Components/Header/Header.component';
 import Banner from './Components/Banner/Banner.component';
-import {BrowserRouter as Router,Switch,Route} from 'react-router-dom';
+import {HashRouter as Router,Switch,Route} from 'react-router-dom';
 import MediaCard from './Components/MediaCard/MediaCard.component';
 import Filter from './Components/Filter/Filter.component';
 import {useStateValue} from './StateProvider';
@@ -21,13 +21,13 @@ function App() {
   const [{Search,filter,product}]=useStateValue();
 
   useEffect(()=>{
-    fetch('https://fakestoreapi.com/products')
+    fetch('https://cors.bridged.cc/https://fakestoreapi.com/products')
               .then(res=>res.json())
               .then(json=> dispatch({
                 type:"PRODUCTS",
                 product:json
               })
-              );
+            );
   },[dispatch]);
   
   useEffect(()=>{
@@ -73,7 +73,6 @@ function App() {
     <div className="App">
        <Router>
         <Switch>
-          
           <Route path="/Cart_Pg">
            <Header/>
            <CartPg/>
@@ -96,7 +95,7 @@ function App() {
               <Header/>
               <History/>
           </Route>
-
+        
           <Route  path="/">
             <Header/>
             <Banner/>

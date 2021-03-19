@@ -11,12 +11,12 @@ function Cartitem({data}) {
             type:"REMOVE_FROM_CART",
             item:
             {
-                id:data.id,
-                name:data.name,
-                imageUrl:data.imageUrl,
-                price:data.price,
-                quantity:1,
+                id:data.item.id,
+                name:data.item.name,
+                imageUrl:data.item.imageUrl,
+                price:data.item.price,
             }
+            ,quantity:1
         });
     }
     const addToCart=()=>{
@@ -24,23 +24,28 @@ function Cartitem({data}) {
             type:"ADD_TO_CART",
             item:
             {
-            id:data.id,
-            name:data.name,
-            imageUrl:data.imageUrl,
-            price:data.price,
-            quantity:1,
+                id:data.item.id,
+                name:data.item.name,
+                imageUrl:data.item.imageUrl,
+                price:data.item.price,    
             }
+            ,quantity:1
         });
     }
-
+    const clearFromCart=()=>{
+        dispatch({
+            type:"CLEAR_CART",
+            id:data.item.id, 
+        });
+    }
     return (
         <div>   
             <div className='checkout-item1'>
                 <div className='image-container'>
-                    <img alt='item' src={data.imageUrl}></img>
+                    <img alt='item' src={data.item.imageUrl}></img>
                 </div>
 
-                <span className='name'>{data.name}</span>
+                <span className='name'>{data.item.name}</span>
 
                 <span className='quantity'>
                     <div className='arrow' onClick={removeFromCart} >
@@ -51,8 +56,8 @@ function Cartitem({data}) {
                         &#10095;
                     </div>
                 </span>
-                <span className='price'>₹{data.price * data.quantity}</span>
-                    <div className='remove-button' onClick={removeFromCart} > &#10005; 
+                <span className='price'>₹{data.item.price * data.quantity}</span>
+                    <div className='remove-button' onClick={clearFromCart} > &#10005; 
                     </div>  
             </div>
         </div>

@@ -6,7 +6,7 @@ function Banner() {
         <div className="banner">
             <img
             className="banner_img"
-            src="https://www.carmatec.ae/wp-content/uploads/2018/11/ecommerce-banner.png"
+            src="https://acquire.io/wp-content/uploads/2017/12/7-Ecommerce-Technology-Trends-that-Empower-Businesses-Updated.png"
             alt="Banner"
             ></img>
         </div>

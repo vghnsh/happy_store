@@ -30,7 +30,7 @@ function Summary() {
             time:moment().format('lll')
         })
         dispatch({
-            type:"CLEAR_CART",
+            type:"EMPTY_CART",
             cart:[]
         })
     }
@@ -46,7 +46,7 @@ function Summary() {
             <b><i>Summary of  Shopping</i></b>
             </div>
             {
-                 cart.map((pg)=>(
+                 cart?.map((pg)=>(
                      
                     <Summaryitem key={pg.id} data={pg}/>
                  ))
@@ -58,7 +58,7 @@ function Summary() {
                     <Button disabled={!add} onClick={order}   size="large" color="primary" variant="contained">
                     <Link className="link_hist" to="/History">Place Your Order</Link> </Button>    
                
-                &nbsp;<b>₹{getTotal(cart)}</b>
+                &nbsp;<h2><b>TOTAL : ₹{getTotal(cart)}</b></h2>
                 <br/>
                 <textarea placeholder="Enter your address" onChange={(e)=>setAdd(e.target.value)} style={{height:'5em',width:'15em'}} >
                     
