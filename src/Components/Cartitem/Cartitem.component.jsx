@@ -39,10 +39,10 @@ function Cartitem({data}) {
         });
     }
     return (
-        <div>   
+           
             <div className='checkout-item1'>
                 <div className='image-container'>
-                    <img alt='item' src={data.item.imageUrl}></img>
+                    <img alt='item' src={data.item.imageUrl.replace('https://fakestoreapi.com/', 'https://fakestoreapi.herokuapp.com/')} ></img>
                 </div>
 
                 <span className='name'>{data.item.name}</span>
@@ -60,7 +60,7 @@ function Cartitem({data}) {
                     <div className='remove-button' onClick={clearFromCart} > &#10005; 
                     </div>  
             </div>
-        </div>
+        
     )
 }
 

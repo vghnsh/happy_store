@@ -46,8 +46,7 @@ function Summary() {
             <b><i>Summary of  Shopping</i></b>
             </div>
             {
-                 cart?.map((pg)=>(
-                     
+                 cart?.map((pg)=>(  
                     <Summaryitem key={pg.id} data={pg}/>
                  ))
             }

@@ -12,7 +12,7 @@ import {useStateValue} from '../../StateProvider';
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 270,
+    maxWidth: 220,
     backgroundColor:'white',
     margin:'0.5em',
     padding:'0.5em',
@@ -58,7 +58,7 @@ export default function MediaCard({data}) {
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image={data.image}
+          image={data.image.replace('https://fakestoreapi.com/', 'https://fakestoreapi.herokuapp.com/')}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">

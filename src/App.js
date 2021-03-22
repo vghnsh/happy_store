@@ -21,7 +21,7 @@ function App() {
   const [{Search,filter,product}]=useStateValue();
 
   useEffect(()=>{
-    fetch('https://cors.bridged.cc/https://fakestoreapi.com/products')
+    fetch('https://fakestoreapi.herokuapp.com/products')
               .then(res=>res.json())
               .then(json=> dispatch({
                 type:"PRODUCTS",
