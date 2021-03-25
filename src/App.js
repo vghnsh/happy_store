@@ -21,7 +21,7 @@ function App() {
   const [{Search,filter,product}]=useStateValue();
 
   useEffect(()=>{
-    fetch('https://fakestoreapi.herokuapp.com/products')
+    fetch('https://fakestoreapi.com/products')
               .then(res=>res.json())
               .then(json=> dispatch({
                 type:"PRODUCTS",

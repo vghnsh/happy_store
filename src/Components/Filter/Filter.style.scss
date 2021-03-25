@@ -1,12 +1,13 @@
 .filterw {
-  width: 20%;
+  width: 14vw;
 }
 .Filter {
   //display: flex;
   margin: 1em;
 }
 .btn {
-  margin: auto;
+  margin-right: auto;
+  margin-left: auto;
   padding: 0.2rem;
 }
 .MuiButtonBase-root {
@@ -19,6 +20,6 @@ h2 {
 }
 @media screen and (max-width: 800px) {
   .filterw {
-    width: 45%;
+    width: 38vw;
   }
 }

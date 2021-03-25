@@ -4,7 +4,7 @@ function Summaryitem({data}) {
     return (
         <div className='checkout-item'>
             <div className='image-container'>
-                <img alt='item' src={data.item.imageUrl.replace('https://fakestoreapi.com/', 'https://fakestoreapi.herokuapp.com/')}></img>
+                <img alt='item' src={data.item.imageUrl}></img>
             </div>
             
             <span className='name'>{data.item.name}</span>
